@@ -1,22 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     margin: 0;
     padding: 0;
+    font-family: monospace;
 }
 
 .header {
-    background-color: chartreuse;
+    background-color: rgb(16, 12, 44);
     height: 180px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 44px;
+    color: gainsboro;
 }
 
 .content {
-    background-color: blueviolet;
+    background-color: rgb(113, 120, 163);
     flex: 1;
     display: flex;
     align-items: center;
@@ -25,16 +31,78 @@ body {
 
 .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 730px;
+    padding: 25px;
+    margin: 0;
+    border-radius: 30px;
+    background-color: darkgrey;
+}
+
+.display {
     height: 200px;
-    width: 100px;
+    width: 680px;
+    margin-bottom: 8px;
+    border-radius: 30px;
+    background-color: gainsboro;
+    text-align: end;
+    font-size: 80px;
+}
+
+button {
+    margin: 8px;
+    border-radius: 30px;
+    height: 100px;
+    width: 150px;
+    font-size: 39px;
+    font-family: monospace;
+    background-color: gainsboro;
+    border: none;
+}
+
+button:hover {
+    background-color: rgba(220, 220, 220, 0.829);
+}
+
+.clear {
+    width: 318px;
+    background-color: rgb(139, 147, 197);
+}
+
+.back {
+    font-size: 85px;
+    background-color: rgb(139, 147, 197);
+}
+
+.clear:hover,
+.back:hover {
+    background-color: rgb(113, 120, 165);
+}
+
+.operator {
+    background-color: lightcoral;
+}
+
+.operator:hover {
+    background-color: rgb(218, 117, 117);
+}
+
+.equals {
+    background-color: rgb(212, 112, 112);
+}
+
+.equals:hover {
+    background-color: rgb(179, 94, 94);
 }
 
 .footer {
-    background-color: chartreuse;
+    background-color: rgb(16, 12, 44);
     height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 20px;
+    color: gainsboro;
+    gap: 10px;
 }
