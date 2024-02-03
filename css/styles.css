@@ -41,13 +41,27 @@ body {
 }
 
 .display {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: space-evenly;
     height: 200px;
     width: 680px;
     margin-bottom: 8px;
     border-radius: 30px;
     background-color: gainsboro;
-    text-align: end;
+}
+
+.display .previous {
+
+    font-size: 40px;
+    background-color: blueviolet;
+}
+
+.display .current {
+
     font-size: 80px;
+    background-color: aqua;
 }
 
 button {
