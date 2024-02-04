@@ -31,11 +31,10 @@ btnOperators.forEach(operator => {
                 let answer = operate(firstOperand, displayValue, currentOperator);
                 previous.textContent = `${firstOperand} ${currentOperator} ${displayValue} ${operator.textContent}`;
                 firstOperand = answer;
-                displayValue = answer;
-                
+                currentOperator = operator.textContent;
             } else {
                 firstOperand = displayValue;
-                currentOperator = operator.textContent
+                currentOperator = operator.textContent;
                 previous.textContent = `${firstOperand} ${currentOperator}`;
             }
             displayValue = '';
@@ -80,7 +79,7 @@ btnChange.addEventListener ('click', () => {
 });
 
 btnDecimal.addEventListener ('click', () => {
-    if (!displayValue.includes('.') && displayValue !== 0) {
+    if (!displayValue.includes('.') && displayValue !== '') {
         displayValue += '.';
         display.textContent = displayValue;
         btnDecimal.disabled = true;
@@ -125,10 +124,46 @@ document.addEventListener('keydown', (keypress) => {
         case '-':
         case '/':
         case '*':
-            // copy code here and change operator to keypress.key
+            if (displayValue !== '') {
+                if (firstOperand !== '' && currentOperator !== null) {
+                    let answer = operate(firstOperand, displayValue, currentOperator);
+                    previous.textContent = `${firstOperand} ${currentOperator} ${displayValue} ${keypress.key}`;
+                    firstOperand = answer;
+                    if (keypress.key === '/') {
+                        currentOperator = '÷';
+                    } else if (keypress.key === '*') {
+                        currentOperator = 'x';
+                    } else {
+                    currentOperator = keypress.key;
+                    }
+                } else {
+                    firstOperand = displayValue;
+                    if (keypress.key === '/') {
+                        currentOperator = '÷';
+                    } else if (keypress.key === '*') {
+                        currentOperator = 'x';
+                    } else {
+                    currentOperator = keypress.key;
+                    }
+                    previous.textContent = `${firstOperand} ${currentOperator}`;
+                }
+                displayValue = '';
+                btnDecimal.disabled = false;
+                if (keypress.key === '/') {
+                    keypress.preventDefault();
+                }
+            }
             break;
         case 'Enter':
-            // copy code here
+            if (currentOperator !== null && displayValue !== '') {
+                secondOperand = displayValue;
+                previous.textContent = `${firstOperand} ${currentOperator} ${secondOperand} =`;
+                let answer = operate (firstOperand, secondOperand, currentOperator);
+                displayValue = answer;
+                display.textContent = answer;
+                firstOperand = answer;
+                currentOperator = null;
+            }
             break;
         case 'Backspace':
             if (display.textContent.length > 1) {
@@ -153,7 +188,7 @@ document.addEventListener('keydown', (keypress) => {
             btnDecimal.disabled = false;
             break;
         case '.':
-            if (!displayValue.includes('.') && displayValue !== 0) {
+            if (!displayValue.includes('.') && displayValue !== '') {
                 displayValue += '.';
                 display.textContent = displayValue;
                 btnDecimal.disabled = true;
@@ -182,7 +217,9 @@ function operate (firstOperand, secondOperand, currentOperator) {
     } else if (currentOperator === '+') {
         result = add(firstOperand, secondOperand)
     }
-    result = parseFloat(result).toFixed(2);
+    if (result % 1 !== 0) {
+        result = parseFloat(result).toFixed(2);
+    }
     return result.toString();
 };
 
