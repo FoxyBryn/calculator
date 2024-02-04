@@ -27,9 +27,17 @@ btnOperands.forEach(operand => {
 btnOperators.forEach(operator => {
     operator.addEventListener('click', () => {
         if (displayValue !== '') {
-            firstOperand = displayValue;
-            currentOperator = operator.textContent
-            previous.textContent = firstOperand + currentOperator;
+            if (firstOperand !== '' && currentOperator !== null) {
+                let answer = operate(firstOperand, displayValue, currentOperator);
+                previous.textContent = `${firstOperand} ${currentOperator} ${displayValue} ${operator.textContent}`;
+                firstOperand = answer;
+                displayValue = answer;
+                
+            } else {
+                firstOperand = displayValue;
+                currentOperator = operator.textContent
+                previous.textContent = `${firstOperand} ${currentOperator}`;
+            }
             displayValue = '';
             btnDecimal.disabled = false;
         }
@@ -72,7 +80,7 @@ btnChange.addEventListener ('click', () => {
 });
 
 btnDecimal.addEventListener ('click', () => {
-    if (!displayValue.includes('.') && displayValue > 0) {
+    if (!displayValue.includes('.') && displayValue !== 0) {
         displayValue += '.';
         display.textContent = displayValue;
         btnDecimal.disabled = true;
@@ -85,12 +93,13 @@ btnDecimal.addEventListener ('click', () => {
 
 btnEquals.addEventListener ('click', () => {
     if (currentOperator !== null && displayValue !== '') {
-        // account for dividing by 0
-        // set displayValue as secondOperand
-        // set previous to ${firstOperand} ${currentOperator} ${secondOperand} =
-        // function to evaluate and produce answer
-        // set displayValue and display.textContent to answer
-        // set answer as firstOperand and clear current operator
+        secondOperand = displayValue;
+        previous.textContent = `${firstOperand} ${currentOperator} ${secondOperand} =`;
+        let answer = operate (firstOperand, secondOperand, currentOperator);
+        displayValue = answer;
+        display.textContent = answer;
+        firstOperand = answer;
+        currentOperator = null;
     }
 });
 
@@ -144,7 +153,7 @@ document.addEventListener('keydown', (keypress) => {
             btnDecimal.disabled = false;
             break;
         case '.':
-            if (!displayValue.includes('.') && displayValue > 0) {
+            if (!displayValue.includes('.') && displayValue !== 0) {
                 displayValue += '.';
                 display.textContent = displayValue;
                 btnDecimal.disabled = true;
@@ -158,3 +167,40 @@ document.addEventListener('keydown', (keypress) => {
             break;
     }
 });
+
+function operate (firstOperand, secondOperand, currentOperator) {
+   let result;
+    if (currentOperator === '÷'){
+        if (parseFloat(secondOperand) === 0) {
+            return 'Go back to school loser!';
+        }
+        result = divide(firstOperand, secondOperand);
+    } else if (currentOperator === 'x') {
+        result = multiply(firstOperand, secondOperand);
+    } else if (currentOperator === '-') {
+        result = minus(firstOperand, secondOperand);
+    } else if (currentOperator === '+') {
+        result = add(firstOperand, secondOperand)
+    }
+    result = parseFloat(result).toFixed(2);
+    return result.toString();
+};
+
+function divide (firstOperand, secondOperand) {
+    return firstOperand/secondOperand;
+};
+
+function multiply (firstOperand, secondOperand) {
+    return firstOperand * secondOperand;
+};
+
+function minus (firstOperand, secondOperand) {
+    return firstOperand - secondOperand;
+};
+
+function add (firstOperand,secondOperand) {
+    const num1 = parseFloat(firstOperand);
+    const num2 = parseFloat(secondOperand);
+    const result = num1 + num2;
+    return result.toString();
+};

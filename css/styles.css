@@ -38,6 +38,7 @@ body {
     margin: 0;
     border-radius: 30px;
     background-color: darkgrey;
+    box-shadow: 0 12px 16px 10px rgba(0,0,0,0.24), 0 17px 50px 10px rgba(0,0,0,0.19);
 }
 
 .display {
@@ -50,18 +51,15 @@ body {
     margin-bottom: 8px;
     border-radius: 30px;
     background-color: gainsboro;
+    box-shadow: 3px 3px #999 inset;
 }
 
 .display .previous {
-
     font-size: 40px;
-    background-color: blueviolet;
 }
 
 .display .current {
-
     font-size: 80px;
-    background-color: aqua;
 }
 
 button {
@@ -73,10 +71,17 @@ button {
     font-family: monospace;
     background-color: gainsboro;
     border: none;
+    box-shadow: 0 5px #999;
 }
 
 button:hover {
     background-color: rgba(220, 220, 220, 0.829);
+}
+
+button:active {
+    background-color: rgba(220, 220, 220, 0.829);
+    box-shadow: 0 2px #666;
+    transform: translateY(3px);
 }
 
 .clear {
@@ -119,4 +124,12 @@ button:hover {
     font-size: 20px;
     color: gainsboro;
     gap: 10px;
+}
+
+.logo {
+    transition: transform 0.4s ease-in-out;
+}
+
+.logo:hover {
+    transform: rotate(360deg) scale(1.2);
 }
